@@ -178,8 +178,9 @@ def main(paths):
 
             for name, fpath in zip(entries["names"], entries["fpaths"]):
                 # correct video codec for streamlit cf https://github.com/streamlit/streamlit/issues/1580
-                rc = f'ffmpeg -y -hide_banner -loglevel error  -i {fpath} -vcodec libx264 {fpath}'
+                rc = f'ffmpeg -y -hide_banner -loglevel error  -i {fpath} -vcodec libx264 {fpath[:-4]}_.mp4'
                 subprocess.run(rc,shell=True)
+                subprocess.run(f'mv {fpath[:-4]}_.mp4 {fpath}',shell=True)
                 st.text(name)
                 st.video(fpath)
 
